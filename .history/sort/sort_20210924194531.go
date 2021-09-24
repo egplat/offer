@@ -24,14 +24,11 @@ func quickSort(nums []int, left int, rigth int) {
 }
 
 func getPivot(nums []int, left int, right int) int {
-	index := left
-	for i := left; i < right; i++ {
-		if nums[i] < nums[index] {
-			swap(nums, i, index)
-			index++
-		}
+	n := len(nums)
+	index := 0
+	for i := 0; i < n; i++ {
+
 	}
-	return index
 }
 
 func swap(nums []int, i int, j int) {

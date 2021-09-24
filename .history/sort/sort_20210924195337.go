@@ -19,7 +19,7 @@ func quickSort(nums []int, left int, rigth int) {
 	if left < rigth {
 		pivot := getPivot(nums, left, rigth)
 		quickSort(nums, left, pivot)
-		quickSort(nums, pivot+1, rigth)
+		quickSort(nums, pivot, rigth)
 	}
 }
 

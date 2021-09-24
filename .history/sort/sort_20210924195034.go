@@ -31,7 +31,6 @@ func getPivot(nums []int, left int, right int) int {
 			index++
 		}
 	}
-	return index
 }
 
 func swap(nums []int, i int, j int) {

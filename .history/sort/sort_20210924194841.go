@@ -28,10 +28,8 @@ func getPivot(nums []int, left int, right int) int {
 	for i := left; i < right; i++ {
 		if nums[i] < nums[index] {
 			swap(nums, i, index)
-			index++
 		}
 	}
-	return index
 }
 
 func swap(nums []int, i int, j int) {

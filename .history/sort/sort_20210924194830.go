@@ -26,12 +26,10 @@ func quickSort(nums []int, left int, rigth int) {
 func getPivot(nums []int, left int, right int) int {
 	index := left
 	for i := left; i < right; i++ {
-		if nums[i] < nums[index] {
-			swap(nums, i, index)
-			index++
+		if nums[left] < nums[index] {
+			swap(nums, left, index)
 		}
 	}
-	return index
 }
 
 func swap(nums []int, i int, j int) {
