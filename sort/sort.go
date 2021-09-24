@@ -1,5 +1,7 @@
 package sort
 
+import "log"
+
 func BubbleSort(nums []int) {
 	n := len(nums)
 	for i := 0; i < n; i++ {
@@ -15,23 +17,26 @@ func QuickSort(nums []int) {
 	quickSort(nums, 0, len(nums))
 }
 
-func quickSort(nums []int, left int, rigth int) {
-	if left < rigth {
-		pivot := getPivot(nums, left, rigth)
+func quickSort(nums []int, left int, right int) {
+	if left < right {
+		pivot := getPivot(nums, left, right)
 		quickSort(nums, left, pivot)
-		quickSort(nums, pivot+1, rigth)
+		quickSort(nums, pivot+1, right)
 	}
 }
 
 func getPivot(nums []int, left int, right int) int {
-	index := left
-	for i := left; i < right; i++ {
-		if nums[i] < nums[index] {
+	pivot := left
+	index := left + 1
+	for i := index; i < right; i++ {
+		if nums[i] < nums[pivot] {
 			swap(nums, i, index)
 			index++
 		}
 	}
-	return index
+	log.Print(nums, index)
+	swap(nums, pivot, index-1)
+	return index - 1
 }
 
 func swap(nums []int, i int, j int) {
