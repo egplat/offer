@@ -1,6 +1,8 @@
 package sort
 
-import "log"
+import (
+	"log"
+)
 
 func BubbleSort(nums []int) {
 	n := len(nums)
@@ -37,6 +39,19 @@ func getPivot(nums []int, left int, right int) int {
 	log.Print(nums, index)
 	swap(nums, pivot, index-1)
 	return index - 1
+}
+
+func PickSort(nums []int) {
+	n := len(nums)
+	for i := 0; i < n; i++ {
+		minindex := i
+		for j := i; j < n; j++ {
+			if nums[j] < nums[minindex] {
+				minindex = j
+			}
+		}
+		swap(nums, i, minindex)
+	}
 }
 
 func swap(nums []int, i int, j int) {
