@@ -4,11 +4,79 @@ import (
 	"container/heap"
 	"container/list"
 	"fmt"
+	"math"
 )
+
+func main111() {
+	ch := make(chan int)
+	go func() {
+		tmp := 0
+		if _, ok := <-ch; ok {
+			tmp = <-ch
+		}
+		if tmp+1 > 100 {
+			return
+		}
+		fmt.Println(tmp + 1)
+		ch <- tmp + 1
+	}()
+	go func() {
+		tmp := 0
+		if _, ok := <-ch; ok {
+			tmp = <-ch
+		}
+		if tmp+1 > 100 {
+			return
+		}
+		fmt.Println(tmp + 1)
+		ch <- tmp + 1
+	}()
+}
 
 type ListNode struct {
 	Val  int
 	Next *ListNode
+}
+
+func getLongest(s string) int {
+	rc := make(map[byte]bool)
+	res := 0
+	r := -1
+	for i := 0; i < len(s); i++ {
+		if i != 0 {
+			delete(rc, s[i-1])
+		}
+		for r+1 < len(s) && !rc[s[r+1]] {
+			rc[s[r+1]] = true
+			r++
+		}
+		res = int(math.Max(float64(res), float64(r-i+1)))
+	}
+	return res
+}
+
+func rv(l *ListNode) *ListNode {
+	head := new(ListNode)
+	assis := head
+	head.Next = l
+	cur := l
+	for cur != nil && cur.Next != nil {
+		if cur.Val == cur.Next.Val {
+			for cur.Next != nil {
+				if cur.Next.Val == cur.Val {
+					cur = cur.Next
+				} else {
+					break
+				}
+			}
+			cur = cur.Next
+			assis.Next = cur
+		} else {
+			assis = cur
+			cur = cur.Next
+		}
+	}
+	return head.Next
 }
 
 /**
