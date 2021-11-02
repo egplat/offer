@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"sync"
 )
 
 //1.半连接和长连接
@@ -40,19 +41,63 @@ func dfs(x int, y int, step int) {
 }
 
 func main() {
-	endx, endy = 3, 3
-	minstep = 9
-	for i := 0; i < 4; i++ {
-		tmp := make([]int, 4)
-		matrix = append(matrix, tmp)
-		record = append(record, tmp)
-	}
-	dx = []int{0, 1, 0, -1}
-	dy = []int{1, 0, -1, 0}
-	dfs(0, 0, 0)
-	// fmt.Print(minstep)
 
-	fmt.Print(getWater([]int{2, 1, 2, 3, 2, 1, 2, 3}))
+	cha, chb, chc := make(chan int, 1), make(chan int, 1), make(chan int, 1)
+
+	var wg sync.WaitGroup
+	wg.Add(101)
+	cha <- 1
+
+	go func() {
+		for {
+			select {
+			case i := <-cha:
+				fmt.Println("a:", i)
+				wg.Done()
+				chb <- i + 1
+				// wg.Done()
+			}
+		}
+	}()
+
+	go func() {
+		for {
+			select {
+			case i := <-chb:
+				fmt.Println("b:", i)
+				chc <- i + 1
+				wg.Done()
+			}
+		}
+	}()
+
+	go func() {
+		for {
+			select {
+			case i := <-chc:
+				fmt.Println("c:", i)
+				wg.Done()
+				cha <- i + 1
+			}
+		}
+	}()
+
+	wg.Wait()
+	// time.Sleep(time.Millisecond * 40)
+
+	// endx, endy = 3, 3
+	// minstep = 9
+	// for i := 0; i < 4; i++ {
+	// 	tmp := make([]int, 4)
+	// 	matrix = append(matrix, tmp)
+	// 	record = append(record, tmp)
+	// }
+	// dx = []int{0, 1, 0, -1}
+	// dy = []int{1, 0, -1, 0}
+	// dfs(0, 0, 0)
+	// // fmt.Print(minstep)
+
+	// fmt.Print(getWater([]int{2, 1, 2, 3, 2, 1, 2, 3}))
 }
 
 func getWater(arr []int) int {
