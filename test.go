@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"sync"
+	"time"
 )
 
 //1.半连接和长连接
@@ -40,7 +41,7 @@ func dfs(x int, y int, step int) {
 	}
 }
 
-func main() {
+func main1() {
 
 	cha, chb, chc := make(chan int, 1), make(chan int, 1), make(chan int, 1)
 
@@ -120,4 +121,27 @@ func getWater(arr []int) int {
 		}
 	}
 	return res
+}
+
+func main() {
+	ch := make(chan int)
+	go func() {
+		for i := 0; i <= 100; i++ {
+			ch <- 1
+			if i%2 == 0 {
+				fmt.Println("A:", i)
+			}
+		}
+	}()
+
+	go func() {
+		for i := 0; i <= 100; i++ {
+			<-ch
+			if i%2 == 1 {
+				fmt.Println("B:", i)
+			}
+		}
+	}()
+
+	time.Sleep(time.Millisecond * 10)
 }
